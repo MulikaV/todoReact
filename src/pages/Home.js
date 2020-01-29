@@ -1,19 +1,23 @@
 import React from "react";
 import Notes from "../components/Notes";
 import Form from "../components/Form";
-import mapDispatchToProps from "react-redux/es/connect/mapDispatchToProps";
 import {connect} from "react-redux";
-import {addNewNote} from "../redux/notes-reducer";
+import {addNewNote, deleteNoteElement} from "../redux/notes-reducer";
 
-const Home = ({addNewNote,notes}) => {
+const Home = ({addNewNote,notes,deleteNoteElement}) => {
+
     const addNote = (value) => {
-        addNewNote(value.notetitle);
+            addNewNote(value.notetitle);
+    };
+
+    const deleteNote = (e) => {
+        deleteNoteElement(e.target.id);
     };
 
     return (
         <div>
             <Form onSubmit={addNote}/>
-            <Notes notes={notes}/>
+            <Notes notes={notes} deleteNote={deleteNote}/>
         </div>
     )
 };
@@ -23,4 +27,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps,{addNewNote})(Home);
+export default connect(mapStateToProps,{addNewNote,deleteNoteElement})(Home);
